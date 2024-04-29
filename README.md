@@ -1,5 +1,5 @@
 # Discord.js Typescript Template
-A bare bones Discord.js v14 project that lets you create a simple discord bot with a command handler and event handler.
+A bare bones Discord.js v14 template that lets you create a discord bot with a basic command handler and event handler, where you can build off of it.
 
 ## Features
 - Event and Command handler
