@@ -5,9 +5,9 @@ import { Event } from "../types";
 import path from "path";
 import fs from "fs";
 
-export async function handleEvents(client: Client, rootPath: string) {
+export default async function handleEvents(client: Client, rootPath: string) {
   const eventsPath = path.join(rootPath, "events");
-  const eventsFolder = pathToFileURL(eventsPath); // For dynamic imports on windows
+  const eventsFolder = pathToFileURL(eventsPath);
   try {
     const commandFiles = fs
       .readdirSync(eventsFolder)
@@ -17,7 +17,7 @@ export async function handleEvents(client: Client, rootPath: string) {
       commandFiles.map(async (file) => {
         const filePath = path.join(eventsPath, file);
         try {
-          const eventFile = await import(`file:///${filePath}`); // Imports file from commands folder
+          const eventFile = await import(`file:///${filePath}`);
           const event: Event = eventFile?.event;
           if (!event) {
             throw new Error(`Event not found in ${filePath}`);

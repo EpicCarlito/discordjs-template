@@ -14,10 +14,11 @@ type CommandData = {
   description: string;
 };
 
-export async function deployCommands(client: Client, rootPath: string) {
+export default async function deployCommands(client: Client, rootPath: string) {
   const commands: CommandData[] = [];
-  const commandsPath = path.join(rootPath, "commands");
-  const commandFolder = pathToFileURL(commandsPath); // For dynamic imports on windows
+  const interactionsPath = path.join(rootPath, "interactions");
+  const commandsPath = path.join(interactionsPath, "commands");
+  const commandFolder = pathToFileURL(commandsPath);
   try {
     const commandFiles = fs
       .readdirSync(commandFolder)
@@ -27,7 +28,7 @@ export async function deployCommands(client: Client, rootPath: string) {
       commandFiles.map(async (file) => {
         const filePath = path.join(commandsPath, file);
         try {
-          const commandFile = await import(`file:///${filePath}`); // Imports file from commands folder
+          const commandFile = await import(`file:///${filePath}`);
           const command: Command = commandFile?.command;
           if (!command) {
             throw new Error(`Command infomration not found in ${filePath}`);
@@ -49,7 +50,7 @@ export async function deployCommands(client: Client, rootPath: string) {
     const rest = new REST({ version: "10" }).setToken(token);
 
     try {
-      await rest.put(Routes.applicationCommands(clientId), { body: commands }); // Sets bot's slash commands
+      await rest.put(Routes.applicationCommands(clientId), { body: commands });
       console.log(`Successfully reloaded application (/) commands.`);
     } catch (error) {
       console.error(error);

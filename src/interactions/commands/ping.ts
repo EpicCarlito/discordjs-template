@@ -1,11 +1,10 @@
 import {
   SlashCommandBuilder,
   CommandInteraction,
-  EmbedBuilder
+  EmbedBuilder,
 } from "discord.js";
-import { Command } from "../types";
+import { Command } from "../../types";
 
-// Ping Command
 export const command: Command = {
   data: new SlashCommandBuilder()
     .setName("ping")
@@ -14,7 +13,6 @@ export const command: Command = {
     if (!interaction.guild) return;
     const clientUser = interaction.client.user;
 
-    // Basic Embed
     const pingEmbed = new EmbedBuilder()
       .setColor("#2FA6BA")
       .setTitle("🏓 Ping!")
