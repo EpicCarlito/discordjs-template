@@ -7,13 +7,11 @@ export const event: Event = {
   async execute(client: Client) {
     console.log(`${client.user?.username} is Currently Online ✅!`);
 
-    // https://discord-api-types.dev/api/discord-api-types-v10/enum/ActivityType
     const activities = [
       { name: "Video Games", type: ActivityType.Playing },
       { name: "Github", type: ActivityType.Playing },
     ];
 
-    // Sets presence when the bot starts
     client.user?.setPresence({
       activities: [
         {
@@ -24,7 +22,6 @@ export const event: Event = {
       status: "dnd",
     });
 
-    // Every five minutes, the bot's presence changes
     setInterval(() => {
       const randomActivity =
         activities[Math.floor(Math.random() * activities.length)];
